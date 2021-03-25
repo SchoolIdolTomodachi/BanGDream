@@ -1892,6 +1892,7 @@ SONG_ICONS = {
     'event': 'event',
     'versions': 'world',
     'played': 'contest',
+    'sp_notes': 'toggler'
 }
 
 SONG_ITEM_FIELDS_ORDER = ['song_name']
@@ -1950,6 +1951,8 @@ class SongCollection(MainItemCollection):
                 setSubField(fields, u'{}_difficulty'.format(difficulty), key='type', value='html')
                 setSubField(fields, u'{}_difficulty'.format(difficulty), key='value', value=mark_safe(u'{}<br />'.format(generateDifficulty(diff))))
 
+        if item.sp_notes:
+            setSubField(fields, 'special_difficulty', key='annotation', value='+ '+_('{} notes').format('SP'))
         if 'event' in fields:
             fields['event'] = subtitledImageLink(item.event, _('Event'), 'event')
 
@@ -1968,6 +1971,9 @@ class SongCollection(MainItemCollection):
                 'type': CuteFormType.YesNo,
             }),
             ('is_full', {
+                'type': CuteFormType.YesNo,
+            }),
+            ('sp_notes', {
                 'type': CuteFormType.YesNo,
             }),
         ])

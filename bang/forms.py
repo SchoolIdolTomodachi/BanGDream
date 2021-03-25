@@ -977,12 +977,15 @@ class SongFilterForm(MagiFiltersForm):
     is_full = forms.NullBooleanField(initial=None, required=False, label=_('FULL version'))
     is_full_filter = MagiFilter(selector='is_full')
 
+    sp_notes = forms.NullBooleanField(initial=None, required=False, label=_('{} notes').format('SP'))
+    sp_notes_filter = MagiFilter(selector='sp_notes')
+
     version = forms.ChoiceField(label=_(u'Server availability'), choices=BLANK_CHOICE_DASH + models.Account.VERSION_CHOICES)
     version_filter = MagiFilter(to_queryset=lambda form, queryset, request, value: queryset.filter(c_versions__contains=value))
 
     class Meta(MagiFiltersForm.Meta):
         model = models.Song
-        fields = ('search', 'i_band', 'i_unlock', 'is_cover', 'is_full', 'version', 'ordering', 'reverse_order')
+        fields = ('search', 'i_band', 'i_unlock', 'is_cover', 'is_full', 'sp_notes', 'version', 'ordering', 'reverse_order')
 
 ############################################################
 # AreaItem form

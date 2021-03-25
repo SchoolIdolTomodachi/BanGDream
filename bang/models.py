@@ -1401,6 +1401,7 @@ class Song(MagiModel):
     expert_difficulty = models.PositiveIntegerField(string_concat(_('Expert'), ' - ', _('Difficulty')), validators=DIFFICULTY_VALIDATORS, null=True)
     special_notes = models.PositiveIntegerField(string_concat(_('Special'), ' - ', _('Notes')), null=True)
     special_difficulty = models.PositiveIntegerField(string_concat(_('Special'), ' - ', _('Difficulty')), validators=DIFFICULTY_VALIDATORS, null=True)
+    sp_notes = models.BooleanField(_('{} notes').format('SP'), default=False)
 
     UNLOCK = OrderedDict([
         ('gift', {
