@@ -1613,6 +1613,7 @@ class Gacha(MagiModel):
 
     limited = models.BooleanField(_('Limited'), default=False)
     dreamfes = models.BooleanField(default=False)
+    birthday = models.BooleanField(_('Birthday'), default=False)
 
     start_date = models.DateTimeField(_('Beginning'), null=True)
     end_date = models.DateTimeField(_('End'), null=True)
@@ -1652,6 +1653,7 @@ class Gacha(MagiModel):
         ('permanent', _(u'Permanent')),
         ('limited', _(u'Limited')),
         ('dreamfes', 'Dream festival'),
+        ('birthday', _(u'Birthday')),
     ]
 
     VERSIONS = Account.VERSIONS

@@ -1509,6 +1509,7 @@ class GachaCollection(MainItemCollection):
         'permanent': 'scout-box',
         'limited': 'hourglass',
         'dreamfes': 'music',
+        'birthday': 'birthday',
     }
 
     filter_cuteform = {
@@ -1550,7 +1551,7 @@ class GachaCollection(MainItemCollection):
 
     def to_fields(self, view, item, in_list=False, exclude_fields=None, *args, **kwargs):
         if exclude_fields is None: exclude_fields = []
-        exclude_fields.append('dreamfes')
+        exclude_fields+=['dreamfes', 'birthday']
         fields = super(GachaCollection, self).to_fields(view, item, *args, icons=GACHA_ICONS, images={
             'name': staticImageURL('gacha.png'),
             'japanese_name': staticImageURL('gacha.png'),
@@ -1659,10 +1660,11 @@ class GachaCollection(MainItemCollection):
                 request=request, **kwargs)
             setSubField(fields, 'limited', key='verbose_name', value=_('Gacha type'))
             setSubField(fields, 'limited', key='type', value='text')
-            setSubField(fields, 'limited', key='value', value=(
-                _('Limited') if item.limited
-                else (models.DREAMFES_PER_LANGUAGE.get(get_language(), 'Dream festival')
-                      if item.dreamfes else _('Permanent'))))
+            _gacha_type=_('Permanent')
+            if item.limited: _gacha_type=_('Limited')
+            if item.dreamfes: _gacha_type=models.DREAMFES_PER_LANGUAGE.get(get_language(), 'Dream festival')
+            if item.birthday: _gacha_type=_('Birthday')
+            setSubField(fields, 'limited', key='value', value=_gacha_type)
             for version in models.Account.VERSIONS.values():
                 setSubField(fields, u'{}image'.format(version['prefix']), key='verbose_name', value=version['translation'])
                 setSubField(fields, u'{}start_date'.format(version['prefix']), key='verbose_name', value=_('Beginning'))

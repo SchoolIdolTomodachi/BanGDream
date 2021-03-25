@@ -354,11 +354,13 @@ class CardFilterForm(MagiFiltersForm):
 
     def _gacha_type_to_queryset(self, queryset, request, value):
         if value == 'permanent':
-            return queryset.filter(gachas__limited=False, gachas__dreamfes=False)
+            return queryset.filter(gachas__limited=False, gachas__dreamfes=False, gachas__birthday=False)
         elif value == 'limited':
             return queryset.filter(gachas__limited=True)
         elif value == 'dreamfes':
             return queryset.filter(gachas__dreamfes=True)
+        elif value == 'birthday':
+            return queryset.filter(gachas__birthday=True)
         return queryset
 
     gacha_type = forms.ChoiceField(label=_(u'Gacha type'), choices=BLANK_CHOICE_DASH + models.Gacha.GACHA_TYPES)
@@ -705,11 +707,13 @@ class GachaFilterForm(MagiFiltersForm):
 
     def _gacha_type_to_queryset(self, queryset, request, value):
         if value == 'permanent':
-            return queryset.filter(limited=False, dreamfes=False)
+            return queryset.filter(limited=False, dreamfes=False, birthday=False)
         elif value == 'limited':
             return queryset.filter(limited=True)
         elif value == 'dreamfes':
             return queryset.filter(dreamfes=True)
+        elif value == 'birthday':
+            return queryset.filter(birthday=True)
         return queryset
 
     gacha_type = forms.ChoiceField(label=_(u'Gacha type'), choices=BLANK_CHOICE_DASH + models.Gacha.GACHA_TYPES)
